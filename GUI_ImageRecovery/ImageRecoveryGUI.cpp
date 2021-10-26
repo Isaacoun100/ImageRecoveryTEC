@@ -40,6 +40,10 @@ void ImageRecoveryGUI::setUpButtons() {
     buttonRun->show();
 
     QObject::connect(buttonRun,SIGNAL(clicked()),this,SLOT(clickedSlot()));
+    QObject::connect(buttonNext,SIGNAL(clicked()),this,SLOT(clickedNextButton()));
+    QObject::connect(buttonAddImage,SIGNAL(clicked()),this,SLOT(clickedAddImage()));
+
+
 
 }
 
@@ -56,6 +60,10 @@ void ImageRecoveryGUI::setUpLabels() {
     labelImageCaption = new QLabel(QApplication::translate("childwidget","Generation #..."),&window);
     labelImageCaption->move(600,400);
     labelImageCaption->show();
+
+    labelSavedImage = new QLabel(QApplication::translate("childwidget","Image: ..."),&window);
+    labelSavedImage->move(200,200);
+    labelSavedImage->show();
 
 }
 
@@ -76,8 +84,22 @@ void ImageRecoveryGUI::setUpWidgets() {
 }
 
 void ImageRecoveryGUI::clickedSlot() {
-    cout << "Running program" << endl;
+    string entryText;
+    entryText = inputGenerations->text().toStdString();
+    cout << "Running genetic algorithm" << endl;
+    cout <<  entryText << endl;
+}
 
+void ImageRecoveryGUI::clickedNextButton() {
+    cout << "Next button has been clicked" << endl;
+
+}
+
+void ImageRecoveryGUI::clickedAddImage() {
+    cout << "Add image has been clicked" << endl;
+    fileChooser = QFileDialog::getOpenFileName(this,tr("Open Image"), ".../ImageRecoveryTEC/generations/",tr("Image Files (*.*)"));
+    labelSavedImage->setText(fileChooser);
+    cout << fileChooser.toStdString() << endl;
 }
 
 

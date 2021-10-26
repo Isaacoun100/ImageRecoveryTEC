@@ -6,6 +6,7 @@
 #include <QtWidgets>
 #include <QObject>
 #include <QMainWindow>
+#include <QFileDialog>
 using namespace std;
 
 #ifndef IMAGERECOVERYTEC_IMAGERECOVERYGUI_H
@@ -28,6 +29,9 @@ private:
     QLineEdit *inputGenerations;
     QLabel *labelImage;
     QLabel *labelImageCaption;
+    QLabel *labelSavedImage;
+
+    QString fileChooser;
 
 
     void setUpButtons();
@@ -37,6 +41,8 @@ private:
 
 public slots:
     void clickedSlot();
+    void clickedNextButton();
+    void clickedAddImage();
 };
 
 #endif //IMAGERECOVERYTEC_IMAGERECOVERYGUI_H
