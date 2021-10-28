@@ -7,6 +7,9 @@
 #include <QObject>
 #include <QMainWindow>
 #include <QFileDialog>
+#include <QPixmap>
+#include <QString>
+
 using namespace std;
 
 #ifndef IMAGERECOVERYTEC_IMAGERECOVERYGUI_H
