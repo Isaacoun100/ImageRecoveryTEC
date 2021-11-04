@@ -1,7 +1,8 @@
 #include <iostream>
-#include "logic/HexGeneticAlgo.h"
+#include "XML/ReadWrite.h"
 
 int main() {
-    HexGeneticAlgo hexGeneticAlgo;
+    ReadWrite readWrite;
+    cout<< readWrite.readFile("image/ti1.ppm")<<endl;
     return 0;
 }
