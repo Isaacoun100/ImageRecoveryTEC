@@ -5,21 +5,21 @@
  * information about the present and past generations
  * @param result the string that contains the data that is going to be written.
  */
-void ReadWrite::writeFile(string result) {
+void ReadWrite::writeFile(string path, string result) {
 
     char tmp[256];
     getcwd(tmp, 256);
     string temporal=tmp;
-    temporal=temporal.erase(temporal.size()-17,temporal.size())+"generations/temp.xml";
+    temporal=temporal.erase(temporal.size()-17,temporal.size())+result;
 
-    ofstream path(temporal);
+    ofstream stream(temporal);
 
-    if(path.fail()){
+    if(stream.fail()){
         cout << "Unable to locate file to write " << endl;
     }
 
-    path<<result;
-    path.close();
+    stream<<result;
+    stream.close();
 }
 
 /**
@@ -27,31 +27,37 @@ void ReadWrite::writeFile(string result) {
  * present and past generations
  * @return a string containing the data in the tmp.txt
  */
-string ReadWrite::readFile() {
-    string text;
+string ReadWrite::readFile(string path) {
+    string text, result;
 
     char tmp[256];
     getcwd(tmp, 256);
     string temporal=tmp;
-    temporal=temporal.erase(temporal.size()-17,temporal.size())+"generations/temp.xml";
+    temporal=temporal.erase(temporal.size()-17,temporal.size())+path;
 
-    ifstream path(temporal);
+    ifstream stream(temporal);
 
-    if(path.fail()){
+    if(stream.fail()){
         cout << "Unable to locate file to read " << endl;
         return text;
     }
 
-    getline(path,text);
+    if (stream.is_open()){
+        while ( getline (stream, text) ){
+            result.append(text +'\n');
+        }
+    }
 
-    path.close();
-    return text;
+    //getline(stream,text);
+
+    stream.close();
+    return result;
 }
 
 /**
  * This method clears all contents in the temporal file that will contain the XML information about the present and
  * past generations
  */
-void ReadWrite::clearFile() {
-    writeFile("");
+void ReadWrite::clearFile(string path) {
+    writeFile(path,"");
 }

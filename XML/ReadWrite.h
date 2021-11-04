@@ -23,21 +23,21 @@ public:
      * This method clears all contents in the temporal file that will contain the XML information about the present and
      * past generations
      */
-    void clearFile();
+    void clearFile(string path);
 
     /**
      * This method will read all of the contents of the temp.txt file that will contain the XML information about the
      * present and past generations
      * @return a string containing the data in the tmp.txt
      */
-    string readFile();
+    string readFile(string path);
 
     /**
      * This method will write the contents of the string result variable into the tmp.txt file that will contain the XML
      * information about the present and past generations
      * @param result the string that contains the data that is going to be written.
      */
-    void writeFile(string result);
+    void writeFile(string path , string result);
 };
 
 
