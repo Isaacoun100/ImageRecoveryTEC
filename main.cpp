@@ -1,6 +1,7 @@
 #include <iostream>
+#include "logic/HexGeneticAlgo.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    HexGeneticAlgo hexGeneticAlgo;
     return 0;
 }
