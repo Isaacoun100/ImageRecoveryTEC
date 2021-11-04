@@ -76,9 +76,20 @@ string HexGeneticAlgo::binToHex(string bin) {
 
 //Genetic Operations
 string HexGeneticAlgo::invert(string hex) {
-    int dec =hexToDec(hex);     //hex to dec
-    int complement=16777215-dec;    //16777215 - bin
-    return decToHex(complement);
+    string result="" , tmp;
+    int dec, complement;
+
+    for(int i=1; i<=hex.size()/6;i++){
+        tmp="";
+        for(int j=0; j<6; j++){
+            tmp+=(hex.at(i*j));
+        }
+        dec =hexToDec(tmp);     //hex to dec
+        complement=16777215-dec;
+        result.append(decToHex(complement));
+    }
+
+    return result;
 }
 
 string HexGeneticAlgo::mutate(string hex) {
@@ -109,10 +120,10 @@ void HexGeneticAlgo::randomizePopulation() {
 
 //Genetic Operations
 HexGeneticAlgo::HexGeneticAlgo() {
-    setTarget("24ef55");
+    setTarget("659B982E504E0C3734");
     bool sequenceFound = false;
-    int mutationRate = 5; //Mutation probability out of Population number of members
-    int inversionRate = 1; //Inversion probability out of Population number of members.
+    int mutationRate = 250; //Mutation probability out of Population number of members
+    int inversionRate = 10; //Inversion probability out of Population number of members.
     int generation =0; //Initial Generation
     srand(time(nullptr));
 
