@@ -3,4 +3,4 @@ project(ImageRecoveryTEC)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(ImageRecoveryTEC main.cpp XML/ReadWrite.cpp XML/ReadWrite.h logic/GeneticAlgorithm.cpp logic/GeneticAlgorithm.h logic/HexGeneticAlgo.cpp logic/HexGeneticAlgo.h)
+add_executable(ImageRecoveryTEC main.cpp XML/ReadWrite.cpp XML/ReadWrite.h logic/GeneticAlgorithm.cpp logic/GeneticAlgorithm.h logic/HexGeneticAlgo.cpp logic/HexGeneticAlgo.h image/ImageManager.cpp image/ImageManager.h)
