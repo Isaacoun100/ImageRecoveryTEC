@@ -13,6 +13,9 @@ using namespace std;
 class ImageManager {
 public:
     ImageManager();
+private:
+    void generateImage(string text, int iteration);
+    void randomImage();
 };
 
 
