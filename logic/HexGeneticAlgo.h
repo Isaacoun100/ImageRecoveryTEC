@@ -23,6 +23,7 @@ public:
 
     //Decimal ←→ Hex
     string decToHex(int dec, int ceros);
+    int hexToDec(string hexa);
     //Decimal ←→ Hex
 
 private:
@@ -32,7 +33,7 @@ private:
     string target;
 
     //Decimal ←→ Hex
-    int hexToDec(string hexa);
+
     //Decimal ←→ Hex
 
     //Binary ←→ Hex

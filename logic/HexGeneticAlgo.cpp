@@ -1,20 +1,36 @@
 #include "HexGeneticAlgo.h"
 
+/**
+ * Setter for the target string
+ * @param hexa
+ */
 void HexGeneticAlgo::setTarget(string hexa) {
     this->target=hexa;
 }
 
+/*
+ * Struct for the population vector
+ */
 struct Member{
     string dna;
     int fitness;
 };
 
+/**
+ * Vector that contains the members
+ */
 struct Population{
     vector<Member> members = vector<Member>(20833);
 };
 
 Population population;
 
+/**
+ * Converts decimal to hexadecimal
+ * @param dec
+ * @param ceros
+ * @return
+ */
 //Decimal ←→ Hex
 string HexGeneticAlgo::decToHex(int dec, int ceros) {
 
@@ -35,6 +51,11 @@ string HexGeneticAlgo::decToHex(int dec, int ceros) {
     return res;
 }
 
+/**
+ * Converts hexadecimal to decimal
+ * @param hex
+ * @return
+ */
 int HexGeneticAlgo::hexToDec(string hex) {
     int dec;
     std::stringstream ss;
@@ -44,6 +65,12 @@ int HexGeneticAlgo::hexToDec(string hex) {
 }
 //Decimal ←→ Hex
 
+/**
+ * Auxiliary function for the decToBin
+ * @param dec
+ * @param result
+ * @return
+ */
 //Decimal ←→ Bin
 string decToBinAux(int dec, string result) {
     if(dec != 0) result.append(decToBinAux(dec / 2, result));
@@ -51,10 +78,18 @@ string decToBinAux(int dec, string result) {
     return result;
 }
 
+/**
+ * Convers decimal to binary
+ * @param dec
+ * @return
+ */
 string HexGeneticAlgo::decToBin(int dec) {
     return decToBinAux(dec,"");
 }
 
+/*+
+ * Converts binary to decimal
+ */
 int HexGeneticAlgo::binToDec(string bin) {
     int val = 0, temp = 1,len = bin.length();
     for (int i = len - 1; i >= 0; i--) {
@@ -65,6 +100,11 @@ int HexGeneticAlgo::binToDec(string bin) {
 }
 //Decimal ←→ Bin
 
+/**
+ * Converts hexadecimal to binary
+ * @param hexa
+ * @return
+ */
 //Binary ←→ Hex
 string HexGeneticAlgo::hexToBin(string hexa) {
     int e = hexToDec(hexa);
@@ -72,11 +112,21 @@ string HexGeneticAlgo::hexToBin(string hexa) {
 
 }
 
+/**
+ * Convertd binary to hexadecimal
+ * @param bin
+ * @return
+ */
 string HexGeneticAlgo::binToHex(string bin) {
     return decToHex(binToDec( bin),2);
 }
 //Binary ←→ Hex
 
+/**
+ * Inverts the given hexadecimal value
+ * @param hexa
+ * @return
+ */
 //Genetic Operations
 string HexGeneticAlgo::invert(string hexa) {
     string result="" , tmp;
@@ -94,17 +144,17 @@ string HexGeneticAlgo::invert(string hexa) {
     return result;
 }
 
+/**
+ * Mutates the given hexadecimal value
+ * @param hexa
+ * @return
+ */
 string HexGeneticAlgo::mutate(string hexa) {
 
     cout << "Original " << hexa << endl;
 
 
     int mutBit= rand()%hexa.size();
-
-    if(mutBit<0 || mutBit>=18){
-        cout<<"NOT WORKING NOT WORKINGNOT WORKINGNOT WORKINGNOT WORKINGNOT WORKINGNOT WORKING"<<endl;
-        cout<<" Mute bit" <<mutBit<<endl;
-    }
 
     string toReplace;
     toReplace+=hexa[mutBit];
@@ -120,6 +170,9 @@ string HexGeneticAlgo::mutate(string hexa) {
     return hexa;
 }
 
+/**
+ * Populates the matrix with the hex from the given image
+ */
 void HexGeneticAlgo::populateFromImage(){
     ImageManager imageManager;
     ReadWrite readWrite;
@@ -130,6 +183,9 @@ void HexGeneticAlgo::populateFromImage(){
     }
 }
 
+/**
+ * Randomizes the population for testing porpuses
+ */
 void HexGeneticAlgo::randomizePopulation() {
     ////Randomizes population
     for(int i =0; i< population.members.size();i++){
@@ -145,6 +201,9 @@ void HexGeneticAlgo::randomizePopulation() {
     }
 }
 
+/**
+ * Initializes the genetic algorithm
+ */
 void HexGeneticAlgo::startGeneticAlgo(){
     setTarget("659B982E504E0C3734");
     bool sequenceFound = false;
@@ -193,6 +252,9 @@ void HexGeneticAlgo::startGeneticAlgo(){
     cout<<"Generation "<<generation<<" Evolved to the full sequence"<<endl;
 }
 
+/**
+ * Constructor for the HexGeneticAlgo
+ */
 //Genetic Operations
 HexGeneticAlgo::HexGeneticAlgo() {
     srand(time(nullptr));

@@ -14,13 +14,15 @@ using namespace std;
 
 class ImageManager {
 public:
+
     ImageManager();
+    void WriteOnImage(vector<string> newList, string text);
     vector<string> getImageMatrix(string imageText);
+    void randomImage(string text);
 private:
     vector<string> rgbToHex(vector<int> vectorRGB);
     vector<string> getListHex();
     void generateImage(string text, int iteration);
-    void randomImage(string text);
 };
 
 

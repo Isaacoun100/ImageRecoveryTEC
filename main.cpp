@@ -2,6 +2,7 @@
 #include "XML/ReadWrite.h"
 #include "image/ImageManager.h"
 #include "logic/HexGeneticAlgo.h"
+#include "XML/ReadWrite.h"
 
 void print(vector <string> const &a) {
     cout << "The vector elements are : ";
@@ -11,16 +12,17 @@ void print(vector <string> const &a) {
 }
 
 int main() {
-
-    /*
     ReadWrite readWrite;
-    ImageManager imageManager;
-    print(imageManager.getImageMatrix(readWrite.readFile("image/gen1.ppm")));
-    cout<< "data here" <<to_string(readWrite.readFile("image/gen1.ppm").at(14)=='\n')<<"data here"<<endl;
-     */
 
     HexGeneticAlgo hexGeneticAlgo;
     hexGeneticAlgo.startGeneticAlgo();
+
+    ImageManager imageManager;
+    vector<string> list=imageManager.getImageMatrix(readWrite.readFile("image/ti1.ppm"));
+
+    print(list);
+
+    imageManager.randomImage("image/ti1");
 
     return 0;
 
