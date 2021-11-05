@@ -7,6 +7,9 @@
 #include <vector>
 #include <bitset>
 
+#include "../image/ImageManager.h"
+#include "../XML/ReadWrite.h"
+
 using namespace std;
 
 struct Member;
@@ -22,8 +25,8 @@ public:
     string decToHex(int dec, int ceros);
     //Decimal ←→ Hex
 
-//private:
-
+private:
+    void populateFromImage();
     void randomizePopulation();
     //The hex we're looking at
     string target;

@@ -10,7 +10,7 @@ struct Member{
 };
 
 struct Population{
-    vector<Member> members = vector<Member>(500000);
+    vector<Member> members = vector<Member>(20833);
 };
 
 Population population;
@@ -91,15 +91,20 @@ string HexGeneticAlgo::invert(string hexa) {
         complement=16777215-dec;
         result.append(decToHex(complement,6));
     }
-    cout << "Original " << hexa << endl;
-    cout<<"Mutated "<<result<<endl;
     return result;
 }
 
 string HexGeneticAlgo::mutate(string hexa) {
 
-    srand(time(nullptr));
-    int mutBit= rand() % hexa.size()-1;
+    cout << "Original " << hexa << endl;
+
+
+    int mutBit= rand()%hexa.size();
+
+    if(mutBit<0 || mutBit>=18){
+        cout<<"NOT WORKING NOT WORKINGNOT WORKINGNOT WORKINGNOT WORKINGNOT WORKINGNOT WORKING"<<endl;
+        cout<<" Mute bit" <<mutBit<<endl;
+    }
 
     string toReplace;
     toReplace+=hexa[mutBit];
@@ -109,7 +114,20 @@ string HexGeneticAlgo::mutate(string hexa) {
     int mutatedDec = 16- decToReplace;
     string mutatedHex = decToHex( mutatedDec  , 1 );
     hexa.replace(mutBit, 1, mutatedHex);
+
+    cout << "Final " << hexa << endl;
+
     return hexa;
+}
+
+void HexGeneticAlgo::populateFromImage(){
+    ImageManager imageManager;
+    ReadWrite readWrite;
+    vector<string> listHex = imageManager.getImageMatrix( readWrite.readFile("image/ti1.ppm") );
+
+    for(int i=0; i<listHex.size();i++){
+        population.members.at(i).dna=listHex.at(i);
+    }
 }
 
 void HexGeneticAlgo::randomizePopulation() {
@@ -133,9 +151,8 @@ void HexGeneticAlgo::startGeneticAlgo(){
     int mutationRate = 25; //Mutation probability out of Population number of members
     int inversionRate = 10; //Inversion probability out of Population number of members.
     int generation =0; //Initial Generation
-    srand(time(nullptr));
 
-    randomizePopulation();
+    populateFromImage();
 
     //Population pop = population;
     while (!sequenceFound){
@@ -159,7 +176,6 @@ void HexGeneticAlgo::startGeneticAlgo(){
             for (int j=0; j<population.members.at(i).dna.size();j++){
                 int tempSelection = rand() % Parents.size();
                 population.members.at(i).dna.at(j) = Parents.at(tempSelection).dna.at(j);
-
                 if(rand()%100<mutationRate){
                     population.members.at(i).dna= mutate(population.members.at(i).dna);
                     j=population.members.at(i).dna.size();
@@ -171,10 +187,13 @@ void HexGeneticAlgo::startGeneticAlgo(){
             }
         }
         cout<< "Generation : "<< generation<< " Highest Fitness : "<< Parents.at(0).fitness<< " with sequence : "<< Parents.at(0).dna.c_str()<< endl;
+        sequenceFound=true;
     }
 
     cout<<"Generation "<<generation<<" Evolved to the full sequence"<<endl;
 }
 
 //Genetic Operations
-HexGeneticAlgo::HexGeneticAlgo() {}
+HexGeneticAlgo::HexGeneticAlgo() {
+    srand(time(nullptr));
+}
