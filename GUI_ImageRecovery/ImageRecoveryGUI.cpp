@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QPixmap>
 #include <QImage>
+#include "dataStructures/CircularLinkedList.h"
 using namespace std;
 
 
@@ -98,20 +99,16 @@ void ImageRecoveryGUI::clickedSlot() {
     image = image.scaledToWidth(labelImage->width(),Qt::SmoothTransformation);
     labelImage->setPixmap(QPixmap::fromImage(image));
 
-
 }
 
 void ImageRecoveryGUI::clickedNextButton() {
     cout << "Next button has been clicked" << endl;
-
 }
 
 void ImageRecoveryGUI::clickedAddImage() {
     cout << "Add image has been clicked" << endl;
     fileChooser = QFileDialog::getOpenFileName(this,tr("Open Image"), ".../ImageRecoveryTEC/generations/",tr("Image Files (*.*)"));
     labelSavedImage->setText("Image Added");
-
-
 }
 
 

@@ -13,5 +13,5 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-add_executable(ImageRecoveryTEC main.cpp GUI_ImageRecovery/ImageRecoveryGUI.cpp GUI_ImageRecovery/ImageRecoveryGUI.h)
+add_executable(ImageRecoveryTEC main.cpp GUI_ImageRecovery/ImageRecoveryGUI.cpp GUI_ImageRecovery/ImageRecoveryGUI.h dataStructures/CircularLinkedList.h)
 target_link_libraries(ImageRecoveryTEC Qt5::Widgets)
