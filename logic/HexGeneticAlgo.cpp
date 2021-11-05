@@ -16,14 +16,13 @@ struct Population{
 Population population;
 
 //Decimal ←→ Hex
-string HexGeneticAlgo::decToHex(int dec, int ceros) {
-
+string HexGeneticAlgo::decToHex(int dec) {
     stringstream ss;
     ss<< hex << dec; // int decimal value
     string res ( ss.str() );
 
-    if(res.size()%ceros!=0){
-        int count = ceros-res.size();
+    if(res.size()%6!=0){
+        int count = 6-res.size()%6;
         string fix;
         while (0<count){
             fix.append("0");
@@ -66,50 +65,42 @@ int HexGeneticAlgo::binToDec(string bin) {
 //Decimal ←→ Bin
 
 //Binary ←→ Hex
-string HexGeneticAlgo::hexToBin(string hexa) {
-    int e = hexToDec(hexa);
-    return decToBin(e);
-
+string HexGeneticAlgo::hexToBin(string hex) {
+    return decToBin(hexToDec(hex) );
 }
 
 string HexGeneticAlgo::binToHex(string bin) {
-    return decToHex(binToDec( bin),2);
+    return decToHex(binToDec( bin ));
 }
 //Binary ←→ Hex
 
 //Genetic Operations
-string HexGeneticAlgo::invert(string hexa) {
+string HexGeneticAlgo::invert(string hex) {
     string result="" , tmp;
     int dec, complement;
 
-    for(int i=1; i <= hexa.size() / 6; i++){
+    for(int i=1; i<=hex.size()/6;i++){
         tmp="";
         for(int j=0; j<6; j++){
-            tmp+=(hexa.at(i * j));
+            tmp+=(hex.at(i*j));
         }
-        dec =hexToDec(tmp);     //hexa to dec
+        dec =hexToDec(tmp);     //hex to dec
         complement=16777215-dec;
-        result.append(decToHex(complement,6));
+        result.append(decToHex(complement));
     }
-    cout << "Original " << hexa << endl;
-    cout<<"Mutated "<<result<<endl;
+
     return result;
 }
 
-string HexGeneticAlgo::mutate(string hexa) {
-
+string HexGeneticAlgo::mutate(string hex) {
+    string result = hexToBin(hex);
     srand(time(nullptr));
-    int mutBit= rand() % hexa.size()-1;
+    int mutBit=rand()%result.size();
 
-    string toReplace;
-    toReplace+=hexa[mutBit];
+    if(result.at(mutBit)=='0') result.replace(mutBit,1,"1");
+    else if (result.at(mutBit)=='1') result.replace(mutBit,1,"0");
 
-    int decToReplace = hexToDec( toReplace );
-
-    int mutatedDec = 16- decToReplace;
-    string mutatedHex = decToHex( mutatedDec  , 1 );
-    hexa.replace(mutBit, 1, mutatedHex);
-    return hexa;
+    return binToHex(result);
 }
 
 void HexGeneticAlgo::randomizePopulation() {
@@ -118,26 +109,27 @@ void HexGeneticAlgo::randomizePopulation() {
         //Resizes parents to be the same size
         population.members.at(i).dna.resize(target.size());
 
-        population.members.at(i).dna = decToHex(rand()%16777215,6);
+        population.members.at(i).dna = decToHex(rand()%16777215);
 
         for(int j=1; j<target.size()/6;j++){
-            population.members.at(i).dna.append( decToHex(rand()%16777215,6));
+            population.members.at(i).dna.append( decToHex(rand()%16777215));
         }
         population.members.at(i).fitness=0;
     }
 }
 
-void HexGeneticAlgo::startGeneticAlgo(){
+//Genetic Operations
+HexGeneticAlgo::HexGeneticAlgo() {
     setTarget("659B982E504E0C3734");
     bool sequenceFound = false;
-    int mutationRate = 25; //Mutation probability out of Population number of members
+    int mutationRate = 250; //Mutation probability out of Population number of members
     int inversionRate = 10; //Inversion probability out of Population number of members.
     int generation =0; //Initial Generation
     srand(time(nullptr));
 
     randomizePopulation();
 
-    //Population pop = population;
+    Population pop = population;
     while (!sequenceFound){
         generation++;
         for (int i=0; i< population.members.size(); i++){
@@ -162,19 +154,35 @@ void HexGeneticAlgo::startGeneticAlgo(){
 
                 if(rand()%100<mutationRate){
                     population.members.at(i).dna= mutate(population.members.at(i).dna);
-                    j=population.members.at(i).dna.size();
+                    j=population.members.size();
                 }
                 else if(rand()%100==inversionRate){
                     population.members.at(i).dna = invert(population.members.at(i).dna);
-                    j=population.members.at(i).dna.size();
+                    j=population.members.size();
                 }
             }
         }
+        string XML=this->XMLstringifyer(population.members);
+        //AQUI SE CREA EL ARCHIVO
         cout<< "Generation : "<< generation<< " Highest Fitness : "<< Parents.at(0).fitness<< " with sequence : "<< Parents.at(0).dna.c_str()<< endl;
     }
-
     cout<<"Generation "<<generation<<" Evolved to the full sequence"<<endl;
 }
 
-//Genetic Operations
-HexGeneticAlgo::HexGeneticAlgo() {}
+string HexGeneticAlgo::XMLstringifyer(vector<Member> population) {
+    string XMLString = "<?xml version=1.0 encoding=UTF-8?>";
+    for (int i = 0; i < population.size(); i++) {
+        XMLString.append("<Member>");
+        XMLString.append("<ID>");
+        XMLString.append(to_string(i));
+        XMLString.append("</ID>");
+        XMLString.append("<DNA>");
+        XMLString.append(population[i].dna);
+        XMLString.append("</DNA>");
+        XMLString.append("<Fitness>");
+        XMLString.append(to_string(population[i].fitness));
+        XMLString.append("</Fitness>");
+        XMLString.append("</Member>");
+    }
+    return XMLString;
+}

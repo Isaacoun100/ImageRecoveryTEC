@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <bitset>
+#include "../XML/ReadWrite.h"
 
 using namespace std;
 
@@ -14,9 +15,12 @@ struct Population;
 
 class HexGeneticAlgo {
 public:
+    string XMLstringifyer(vector<Member> Population);
     HexGeneticAlgo();
     void startGeneticAlgo();
     void setTarget(string hexa);
+
+    ReadWrite Escritor;
 
     //Decimal ←→ Hex
     string decToHex(int dec, int ceros);
@@ -29,11 +33,12 @@ public:
     string target;
 
     //Decimal ←→ Hex
-    int hexToDec(string hexa);
+    string decToHex(int dec);
+    int hexToDec(string hex);
     //Decimal ←→ Hex
 
     //Binary ←→ Hex
-    string hexToBin(string hexa);
+    string hexToBin(string hex);
     string binToHex(string bin);
     //Binary ←→ Hex
 
@@ -43,8 +48,8 @@ public:
     //Decimal ←→ Hex
 
     //Genetic Operations
-    string mutate(string hexa);
-    string invert(string hexa);
+    string mutate(string hex);
+    string invert(string hex);
     //Genetic Operations.
 };
 
