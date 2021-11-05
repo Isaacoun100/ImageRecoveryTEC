@@ -227,7 +227,7 @@ public:
     /**
      * @brief método que permite obtener un elemento que se encuentra en la lista
      * @param index posición del elemento que se desea obtener
-     * @return dato de tipo T 
+     * @return dato de tipo T
      */
     T get(int index){
         if(head == NULL){

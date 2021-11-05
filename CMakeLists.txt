@@ -3,7 +3,7 @@ project(ImageRecoveryTEC)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_PREFIX_PATH "C:\\Qt\\Qt5.14.0\\5.14.0\\mingw73_32\\")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}"${${PROJECT_NAME}_SOURCE_DIR}/cmake")
 
 find_package( Qt5Core REQUIRED)
 find_package( Qt5Widgets REQUIRED)
