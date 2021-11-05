@@ -15,19 +15,25 @@ struct Population;
 class HexGeneticAlgo {
 public:
     HexGeneticAlgo();
-    void setTarget(string hex);
-private:
+    void startGeneticAlgo();
+    void setTarget(string hexa);
+
+    //Decimal ←→ Hex
+    string decToHex(int dec, int ceros);
+    //Decimal ←→ Hex
+
+//private:
 
     void randomizePopulation();
     //The hex we're looking at
     string target;
+
     //Decimal ←→ Hex
-    string decToHex(int dec);
-    int hexToDec(string hex);
+    int hexToDec(string hexa);
     //Decimal ←→ Hex
 
     //Binary ←→ Hex
-    string hexToBin(string hex);
+    string hexToBin(string hexa);
     string binToHex(string bin);
     //Binary ←→ Hex
 
@@ -37,8 +43,8 @@ private:
     //Decimal ←→ Hex
 
     //Genetic Operations
-    string mutate(string hex);
-    string invert(string hex);
+    string mutate(string hexa);
+    string invert(string hexa);
     //Genetic Operations.
 };
 
